@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF vs MLBB Battle</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#000;
+  font-family:Arial, sans-serif;
+  color:white;
+  overflow:hidden;
+}
+
+/* TOP BAR */
+.topbar{
+  height:10vh;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 16px;
+  font-size:clamp(16px,3vw,22px);
+  font-weight:bold;
+}
+.team{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.team img{width:28px}
+
+/* ARENA */
+.arena{
+  position:relative;
+  height:70vh;
+  width:100%;
+  overflow:hidden;
+}
+
+/* COLOR BAR */
+.ff, .ml{
+  position:absolute;
+  top:0;
+  height:100%;
+  transition:width .3s ease;
+}
+.ff{
+  left:0;
+  background:#2196f3;
+  z-index:1;
+}
+.ml{
+  right:0;
+  background:#ffeb3b;
+  z-index:1;
+}
+
+/* POINT TEXT (PALING ATAS) */
+.point{
+  position:absolute;
+  top:12px;
+  font-size:clamp(14px,3vw,20px);
+  font-weight:bold;
+  z-index:20; /* INI KUNCI */
+}
+#ffPoint{left:15px;color:#bbdefb}
+#mlPoint{right:15px;color:#fff9c4}
+
+/* LOGO */
+.logo{
+  position:absolute;
+  top:50%;
+  transform:translate(-50%,-50%);
+  width:clamp(70px,20vw,110px);
+  z-index:10;
+  transition:left .3s ease;
+}
+
+/* BUTTON */
+.controls{
+  height:20vh;
+  background:#111;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+button{
+  font-size:clamp(16px,4vw,20px);
+  padding:12px 20px;
+  border:none;
+  border-radius:25px;
+}
+.ffbtn{background:#64b5f6}
+.mlbtn{background:#fff176}
+
+/* WIN OVERLAY */
+#winOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+}
+#winOverlay img{
+  width:clamp(200px,60vw,320px);
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOP -->
+<div class="topbar">
+  <div class="team">
+    <img src="ff_icon.jpg"> FF (<span id="winFF">0</span>)
+  </div>
+  <div>VS</div>
+  <div class="team">
+    (<span id="winML">0</span>) MLBB <img src="mlbb_icon.jpg">
+  </div>
+</div>
+
+<!-- ARENA -->
+<div class="arena">
+  <div class="ff" id="ff"></div>
+  <div class="ml" id="ml"></div>
+
+  <div class="point" id="ffPoint">FF POINT: <span id="pFF">0</span></div>
+  <div class="point" id="mlPoint">ML POINT: <span id="pML">0</span></div>
+
+  <img src="ff.jpg" class="logo" id="logoFF">
+  <img src="mlbb.jpg" class="logo" id="logoML">
+</div>
+
+<!-- BUTTON -->
+<div class="controls">
+  <div>
+    <button class="ffbtn" onclick="addFF(1)">+1</button>
+    <button class="ffbtn" onclick="addFF(5)">+5</button>
+  </div>
+  <div>
+    <button class="mlbtn" onclick="addML(1)">+1</button>
+    <button class="mlbtn" onclick="addML(5)">+5</button>
+  </div>
+</div>
+
+<!-- WIN -->
+<div id="winOverlay">
+  <img id="winImage">
+</div>
+
+<script>
+let ffPoint=0, mlPoint=0;
+let winFF=0, winML=0;
+let finished=false;
+
+function update(){
+  pFF.innerText=ffPoint;
+  pML.innerText=mlPoint;
+
+  let center = 50 + (ffPoint-mlPoint)*0.5;
+  center = Math.max(0,Math.min(100,center));
+
+  ff.style.width=center+"%";
+  ml.style.width=(100-center)+"%";
+
+  logoFF.style.left=(center/2)+"%";
+  logoML.style.left=(center+(100-center)/2)+"%";
+
+  if(!finished && ffPoint>=100){
+    finished=true;
+    ff.style.width="100%";
+    ml.style.width="0%";
+    logoFF.style.left="50%";
+    winFF++; winFFEl();
+    showWin("ffmenang.png");
+  }
+
+  if(!finished && mlPoint>=100){
+    finished=true;
+    ff.style.width="0%";
+    ml.style.width="100%";
+    logoML.style.left="50%";
+    winML++; winMLEl();
+    showWin("mlbbmenang.png");
+  }
+}
+
+function winFFEl(){winFFSpan.innerText=winFF}
+function winMLEl(){winMLSpan.innerText=winML}
+
+function showWin(img){
+  winImage.src=img;
+  winOverlay.style.display="flex";
+  setTimeout(reset,2000);
+}
+
+function reset(){
+  ffPoint=0; mlPoint=0; finished=false;
+  winOverlay.style.display="none";
+  update();
+}
+
+function addFF(n){if(!finished){ffPoint=Math.min(100,ffPoint+n);update()}}
+function addML(n){if(!finished){mlPoint=Math.min(100,mlPoint+n);update()}}
+
+const pFF=document.getElementById("pFF");
+const pML=document.getElementById("pML");
+const ff=document.getElementById("ff");
+const ml=document.getElementById("ml");
+const logoFF=document.getElementById("logoFF");
+const logoML=document.getElementById("logoML");
+const winOverlay=document.getElementById("winOverlay");
+const winImage=document.getElementById("winImage");
+const winFFSpan=document.getElementById("winFF");
+const winMLSpan=document.getElementById("winML");
+
+update();
+</script>
+
+</body>
+</html>
