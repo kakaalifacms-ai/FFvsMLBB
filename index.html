@@ -155,6 +155,39 @@ button{
   /* TAMBAHAN */
   box-shadow: inset 10px 0 20px rgba(0, 0, 0, .3);
 }
+
+.topbar{
+  height:10vh;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  font-weight:bold;
+}
+
+.centerScore{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.scoreTop{
+  font-size:32px;
+}
+
+.vs{
+  font-size:28px;
+}
+
+/* Laptop lebih gede */
+@media (min-width:900px){
+  .scoreTop{
+    font-size:60px;
+  }
+  .vs{
+    font-size:40px;
+  }
+}
 </style>
 </head>
 
@@ -162,13 +195,26 @@ button{
 
 <!-- TOP -->
 <div class="topbar">
-  <div class="team">
-    <img src="ff_icon.jpg"> FF (<span id="winFF">0</span>)
+
+  <div class="team leftTeam">
+    <img src="ff_icon.jpg">
+    FF
   </div>
-  <div>VS</div>
-  <div class="team">
-    (<span id="winML">0</span>) MLBB <img src="mlbb_icon.jpg">
+
+  <div class="centerScore">
+    <span id="winFF" class="scoreTop">0</span>
+    
+    <span class="vs">VS</span>
+    
+    <span id="winML" class="scoreTop">0</span>
   </div>
+
+  <div class="team rightTeam">
+    MLBB
+    <img src="mlbb_icon.jpg">
+  </div>
+
+</div>
 </div>
 
 <!-- ARENA -->
