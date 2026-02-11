@@ -30,8 +30,16 @@ body{
   align-items:center;
   gap:8px;
 }
-.team img{width:28px}
+.team img{
+  height:35px;
+  width:auto;
+}
 
+@media (min-width: 900px){
+  .team img{
+    height:80px;   /* laptop jadi besar */
+  }
+}
 /* ARENA */
 .arena{
   position:relative;
@@ -80,13 +88,16 @@ body{
   position:absolute;
   top:50%;
   transform:translate(-50%,-50%);
-  width:20vw;        /* ikut lebar layar */
-  max-width:350px;   /* batas maksimal */
-  min-width:120px;   /* biar gak kekecilan di HP */
+  
+  height:45vh;        /* BESAR ikut tinggi layar */
+  width:auto;         /* biar proporsional */
+  
+  max-height:500px;   /* batas maksimal laptop */
+  min-height:120px;   /* biar gak kecil di HP */
+  
   z-index:5;
   opacity:0.95;
-  
-filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 0 30px rgba(0,0,0,0.6));
 }
 
 /* BUTTON */
