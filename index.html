@@ -80,9 +80,13 @@ body{
   position:absolute;
   top:50%;
   transform:translate(-50%,-50%);
-  width:clamp(120px,22vw,260px);
-  z-index:10;
-  opacity: 0. 95;
+  width:20vw;        /* ikut lebar layar */
+  max-width:350px;   /* batas maksimal */
+  min-width:120px;   /* biar gak kekecilan di HP */
+  z-index:5;
+  opacity:0.95;
+  
+filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
 }
 
 /* BUTTON */
@@ -119,8 +123,27 @@ button{
   width:clamp(200px,60vw,320px);
 }
 
-.ff{ box-shadow: inset -10px 0 20px rgba(0,0,0,.3); }
-.ml{ box-shadow: inset 10px 0 20px rgba(0,0,0,.3); }
+.ff {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #2196f3;
+  
+  /* TAMBAHAN */
+  box-shadow: inset -10px 0 20px rgba(0, 0, 0, .3);
+}
+
+.ml {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: #ffeb3b;
+  
+  /* TAMBAHAN */
+  box-shadow: inset 10px 0 20px rgba(0, 0, 0, .3);
+}
 </style>
 </head>
 
