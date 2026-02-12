@@ -52,7 +52,7 @@ body{
 
 .ff, .ml{
   height:100%;
-  transition:width .3s ease;
+  transition:width .4s ease;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -104,6 +104,7 @@ button{
   border:none;
   border-radius:30px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .ffbtn{ background:#64b5f6; }
@@ -114,7 +115,7 @@ button{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.85);
+  background:rgba(0,0,0,.9);
   z-index:999;
   justify-content:center;
   align-items:center;
@@ -124,8 +125,10 @@ button{
 }
 
 #winOverlay img{
-  width:250px;
-  margin-bottom:20px;
+  width:90vw;
+  max-width:1200px;
+  height:auto;
+}
 }
 </style>
 </head>
@@ -173,12 +176,12 @@ button{
 <!-- BUTTON -->
 <div class="controls">
   <div>
-    <button class="ffbtn" onclick="addFF(1)">+1</button>
-    <button class="ffbtn" onclick="addFF(5)">+5</button>
+    <button class="ffbtn" onclick="addFF(1)">+1 (Z)</button>
+    <button class="ffbtn" onclick="addFF(5)">+5 (X)</button>
   </div>
   <div>
-    <button class="mlbtn" onclick="addML(1)">+1</button>
-    <button class="mlbtn" onclick="addML(5)">+5</button>
+    <button class="mlbtn" onclick="addML(1)">+1 (N)</button>
+    <button class="mlbtn" onclick="addML(5)">+5 (M)</button>
   </div>
 </div>
 
@@ -215,16 +218,24 @@ function update(){
 
   if(!finished && ffPoint>=100){
     finished=true;
+    ff.style.width="100%";
+    ml.style.width="0%";
     winFF++;
     winFFSpan.innerText=winFF;
-    showWin("ffmenang.png","FREE FIRE MENANG!");
+    setTimeout(()=>{
+      showWin("ffmenang.png","FREE FIRE MENANG!");
+    },400);
   }
 
   if(!finished && mlPoint>=100){
     finished=true;
+    ff.style.width="0%";
+    ml.style.width="100%";
     winML++;
     winMLSpan.innerText=winML;
-    showWin("mlbbmenang.png","MLBB MENANG!");
+    setTimeout(()=>{
+      showWin("mlbbmenang.png","MLBB MENANG!");
+    },400);
   }
 }
 
@@ -257,30 +268,20 @@ function addML(n){
   }
 }
 
-// KONTROL KEYBOARD
-document.addEventListener("keydown", function(e) {
-  
-  if (finished) return; // kalau sudah menang jangan bisa nambah
-  
+/* KEYBOARD CONTROL */
+document.addEventListener("keydown", function(e){
+
+  if(finished) return;
+
   let key = e.key.toLowerCase();
-  
-  if (key === "z") {
-    addFF(1);
-  }
-  
-  if (key === "x") {
-    addFF(5);
-  }
-  
-  if (key === "n") {
-    addML(1);
-  }
-  
-  if (key === "m") {
-    addML(5);
-  }
-  
+
+  if(key==="z") addFF(1);
+  if(key==="x") addFF(5);
+  if(key==="n") addML(1);
+  if(key==="m") addML(5);
+
 });
+
 update();
 </script>
 
