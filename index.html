@@ -12,9 +12,7 @@ body{
   background:#000;
   font-family:Arial, sans-serif;
   color:white;
-  height:100vh;
-  display:flex;
-  flex-direction:column;
+  overflow:hidden;
 }
 
 /* TOP BAR */
@@ -93,7 +91,7 @@ body{
 
 /* BUTTON */
 .controls{
-  min-height:110px;
+  height:20vh;
   background:#111;
   display:flex;
   justify-content:space-around;
@@ -258,29 +256,30 @@ function addML(n){
     update();
   }
 }
+
 // KONTROL KEYBOARD
-document.addEventListener("keydown", function(e){
-
-  if(finished) return; // kalau sudah menang jangan bisa nambah
-
+document.addEventListener("keydown", function(e) {
+  
+  if (finished) return; // kalau sudah menang jangan bisa nambah
+  
   let key = e.key.toLowerCase();
-
-  if(key === "z"){
+  
+  if (key === "z") {
     addFF(1);
   }
-
-  if(key === "x"){
+  
+  if (key === "x") {
     addFF(5);
   }
-
-  if(key === "n"){
+  
+  if (key === "n") {
     addML(1);
   }
-
-  if(key === "m"){
+  
+  if (key === "m") {
     addML(5);
   }
-
+  
 });
 update();
 </script>
